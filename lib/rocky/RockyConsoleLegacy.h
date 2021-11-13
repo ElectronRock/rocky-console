@@ -26,9 +26,11 @@ namespace rocky
         virtual bool ObtainMaxXY(unsigned& x, unsigned& y) override;
         virtual bool Clear() override;
         virtual bool SetTest(const char* format, ...) override;
-        virtual bool InitColor(unsigned index, unsigned back, unsigned text) override;
+        virtual bool IsKeyPressed() override;
+        virtual RockyKey GetKey() override;
+        virtual bool InitColor(unsigned index, RockyColor back, RockyColor text) override;
         virtual bool SetColor(unsigned index) override;
-        virtual bool SetColor(unsigned back, unsigned text) override;
+        virtual bool SetColor(RockyColor back, RockyColor text) override;
 
         friend IRockyConsole* CreateLegacy();
     };

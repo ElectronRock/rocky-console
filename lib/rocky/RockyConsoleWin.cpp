@@ -46,17 +46,27 @@ namespace rocky
         return false;
     }
 
-    bool RockyConsoleWin::InitColor(unsigned index, unsigned back, unsigned text)
+    bool RockyConsoleWin::IsKeyPressed()
+    {
+        return false;
+    }
+
+    RockyKey RockyConsoleWin::GetKey()
+    {
+        return RockyKey::Count;
+    }
+
+    bool RockyConsoleWin::InitColor(unsigned index, RockyColor back, RockyColor text)
+    {
+        return false;
+    }
+
+    bool RockyConsoleWin::SetColor(RockyColor back, RockyColor text)
     {
         return false;
     }
 
     bool RockyConsoleWin::SetColor(unsigned index)
-    {
-        return false;
-    }
-
-    bool RockyConsoleWin::SetColor(unsigned back, unsigned text)
     {
         return false;
     }

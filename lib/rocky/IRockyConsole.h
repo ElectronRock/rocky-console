@@ -8,6 +8,9 @@
 
 #pragma once
 
+#include "rocky/RockyColor.h"
+#include "rocky/RockyKey.h"
+
 namespace rocky
 {
 
@@ -72,6 +75,18 @@ namespace rocky
 
         /**
          * \brief 
+         * \return 
+         */
+        virtual bool IsKeyPressed() = 0;
+
+        /**
+         * \brief 
+         * \return 
+         */
+        virtual RockyKey GetKey() = 0;
+
+        /**
+         * \brief 
          * \param format 
          * \param ... 
          * \return 
@@ -85,7 +100,7 @@ namespace rocky
          * \param text 
          * \return 
          */
-        virtual bool InitColor(unsigned index, unsigned back, unsigned text) = 0;
+        virtual bool InitColor(unsigned index, RockyColor back, RockyColor text) = 0;
 
         /**
          * \brief 
@@ -95,11 +110,11 @@ namespace rocky
         virtual bool SetColor(unsigned index) = 0;
 
         /**
-         * \brief 
+         * \brief
          * \param back 
          * \param text 
          * \return 
          */
-        virtual bool SetColor(unsigned back, unsigned text) = 0;
+        virtual bool SetColor(RockyColor back, RockyColor text) = 0;
     };
 }
