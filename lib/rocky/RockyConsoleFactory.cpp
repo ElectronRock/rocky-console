@@ -4,7 +4,6 @@
 #include "stdexcept"
 #include "rocky/RockyConsoleNix.h"
 #include "rocky/RockyConsoleWin.h"
-#include "rocky/RockyConsoleLegacy.h"
 
 namespace rocky
 {
@@ -27,13 +26,6 @@ namespace rocky
 #else
         return new RockyConsoleNix;
 #endif
-    }
-
-    IRockyConsole* CreateLegacy()
-    {
-        AssertLibraryNotInitialized();
-        IsInit = true;
-        return new RockyConsoleLegacy;
     }
 
 }
