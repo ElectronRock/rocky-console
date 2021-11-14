@@ -41,13 +41,13 @@ static void InitColors(rocky::IRockyConsole* console) {
 static void CharAt(rocky::IRockyConsole* console, int ch, int color, int x, int y) {
 	console->GoToXY(x, y);
 	console->SetColor(color);
-	console->SetTest("%c", ch);
+	console->SetText("%c", ch);
 }
 
 static void InitialDraw(rocky::IRockyConsole* console, const MapMaker::TMap& map) {
 	console->Clear();
 	console->GoToXY(TitleX, TitleY);
-	console->SetTest("Use arrows to move point, use Esc to exit.");
+	console->SetText("Use arrows to move point, use Esc to exit.");
 	int i, j;
 	for (i = 0; i < FieldWidth; ++i) {
 		for (j = 0; j < FieldHeight; ++j) {

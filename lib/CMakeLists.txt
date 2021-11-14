@@ -15,7 +15,7 @@ file(GLOB ROCKY_SOURSES
     rocky/*.cpp
 )
 
-find_package(Curses REQUIRED)
+#find_package(Curses REQUIRED)
 include_directories(${CURSES_INCLUDE_DIR})
 
 add_library(rocky SHARED ${ROCKY_HEADERS} ${ROCKY_SOURSES} ${CURSES_LIBRARIES})
