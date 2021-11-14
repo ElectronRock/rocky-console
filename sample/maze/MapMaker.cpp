@@ -3,7 +3,7 @@
 
 MapMaker::TMap MapMaker::Make(unsigned w, unsigned h)
 {
-	TMap result;
+    TMap result;
     
     std::random_device dev;
     std::mt19937 rng(dev());
@@ -21,5 +21,5 @@ MapMaker::TMap MapMaker::Make(unsigned w, unsigned h)
         result.push_back(line);
     }
     
-	return result;
+    return result;
 }
