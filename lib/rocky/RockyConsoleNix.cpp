@@ -49,7 +49,7 @@ namespace rocky
         keypad(stdscr, TRUE);
         start_color();
         attron(A_BOLD);
-        ShowCursor(); //возможно, тут есть некоторые методы которые я хз как заполнять
+        ShowCursor();
     }
 
     void RockyConsoleNix::Destroy() {
@@ -83,7 +83,16 @@ namespace rocky
     }
 
     bool RockyConsoleNix::SetText(const char* format, ...) {
-        return false;
+        va_list arglist;
+        char buffer[1024];
+        int len;
+
+        va_start(arglist, format);
+
+        len = vsnprintf(buffer, sizeof(buffer)-1, format, arglist);
+        len = (printw(buffer) != ERR) ? len : -1;
+        refresh();
+        return len;
     }
 
     bool RockyConsoleNix::IsKeyPressed() {
