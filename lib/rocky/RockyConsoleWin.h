@@ -11,13 +11,15 @@
 #include "rocky/IRockyConsole.h"
 #include <unordered_map>
 
-
 namespace rocky
 {
 
     class RockyConsoleWin final : public IRockyConsole
     {
-
+        using TColorMap = std::unordered_map<RockyColor, unsigned short>;
+        using TKeyMap = std::unordered_map<int, RockyKey>;
+        void InitializeColorMap();
+        void InitializeKeyMap();
         RockyConsoleWin();
 
         virtual void Initialize() override;
@@ -35,16 +37,20 @@ namespace rocky
         virtual bool SetColor(unsigned index) override;
         virtual bool SetColor(RockyColor back, RockyColor text) override;
 
-        friend IRockyConsole* Create();
+        // Own methods
 
-
-        short GetColor(RockyColor color);
+        unsigned short GetColor(RockyColor color);
+        unsigned short CombineColors(RockyColor back, RockyColor text);
         static void SetCursor(int show);
-        RockyKey ConvtKey(int key);
+        RockyKey ConvertKey(int key);
 
-        static constexpr int ConMaxColors = 64;
-        short m_colors[ConMaxColors];
-        std::unordered_map<RockyColor, short> m_colormap;
-        std::unordered_map<int, RockyKey> m_keymap;
+        static constexpr unsigned ConMaxColors = 64;
+        static constexpr unsigned ConsoleCursorSize = 25;
+
+        unsigned short m_colors[ConMaxColors];
+        TColorMap m_colorMap;
+        TKeyMap m_keyMap;
+
+        friend IRockyConsole* Create();
     };
 }

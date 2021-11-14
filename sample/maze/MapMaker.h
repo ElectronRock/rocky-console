@@ -1,5 +1,14 @@
+/* Copyright (C) 2021 ElectronRock - All Rights Reserved
+ * You may use, distribute and modify this code under the
+ * terms of the MIT license.
+ *
+ * You should have received a copy of the MIT license with
+ * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/ElectronRock/rocky-console
+ */
+
 #pragma once
-#include <vector>;
+
+#include <vector>
 
 class MapMaker final {
 public:
@@ -8,10 +17,8 @@ public:
 		Field,
 		Wall,
 	};
-	using tmap = std::vector<std::vector<EntityType>>;
-	MapMaker(const int w, const int h) : width(w), height(h) {}
-	tmap Make();
-private:
-	const int width;
-	const int height;
+
+	using TMap = std::vector<std::vector<EntityType>>;
+
+	static TMap Make(unsigned w, unsigned h);
 };

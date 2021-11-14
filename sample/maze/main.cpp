@@ -44,7 +44,7 @@ static void CharAt(rocky::IRockyConsole* console, int ch, int color, int x, int 
 	console->SetTest("%c", ch);
 }
 
-static void InitialDraw(rocky::IRockyConsole* console, const MapMaker::tmap& map) {
+static void InitialDraw(rocky::IRockyConsole* console, const MapMaker::TMap& map) {
 	console->Clear();
 	console->GoToXY(TitleX, TitleY);
 	console->SetTest("Use arrows to move point, use Esc to exit.");
@@ -65,7 +65,7 @@ static void InitialDraw(rocky::IRockyConsole* console, const MapMaker::tmap& map
 }
 
 /* Returns 1 if quit. */
-int ProcessKey(rocky::IRockyConsole* console, const MapMaker::tmap& map) {
+int ProcessKey(rocky::IRockyConsole* console, const MapMaker::TMap& map) {
 	// position change
 	int dx = 0;
 	int dy = 0;
@@ -132,8 +132,8 @@ int main(int argc, char* argv[])
 	FieldHeight = max_y - FieldY - FieldPadding;
 	assert(FieldWidth > 2);
 	assert(FieldHeight > 2);
-	MapMaker m(FieldWidth, FieldHeight);
-	auto map = m.Make();
+
+	auto map = MapMaker::Make(FieldWidth, FieldWidth);
 
 	InitialDraw(console, map);
 
