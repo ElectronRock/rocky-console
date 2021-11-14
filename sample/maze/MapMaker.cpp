@@ -1,33 +1,25 @@
 #include "MapMaker.h"
 #include <random>
 
-#define CHAR_BORDER '#'
-#define CHAR_FIELD  ' '
-#define COLOR_BORDER 1
-#define COLOR_FIELD  2
-
-MapMaker::tmap MapMaker::Make()
+MapMaker::TMap MapMaker::Make(unsigned w, unsigned h)
 {
-	tmap result;
+	TMap result;
+    
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    const std::uniform_int_distribution<std::mt19937::result_type> dist100(0, 100);
+
+    for (unsigned i = 0; i < w; ++i) 
     {
-        std::random_device dev;
-        std::mt19937 rng(dev());
-        std::uniform_int_distribution<std::mt19937::result_type> dist100(0, 100);
-        int i, j;
-        for (i = 0; i < width; ++i) 
+        std::vector<EntityType> line;
+        for (unsigned j = 0; j < h; ++j) 
         {
-            std::vector<EntityType> line;
-            for (j = 0; j < height; ++j) {
-                int r = dist100(rng);
-                if ((r%100)<32) {
-                    line.emplace_back(MapMaker::EntityType::Wall);
-                }
-                else {
-                    line.emplace_back(MapMaker::EntityType::Field);
-                }
-            }
-            result.push_back(line);
+            const auto r = dist100(rng);
+            const auto type = r % 100 < 32 ? EntityType::Wall : EntityType::Field;
+            line.emplace_back(type);
         }
+        result.push_back(line);
     }
+    
 	return result;
 }

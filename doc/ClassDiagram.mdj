@@ -341,7 +341,7 @@
 											"top": 487,
 											"width": 215,
 											"height": 13,
-											"text": "RockyConsoleLegacy"
+											"text": "RockyConsoleNix"
 										},
 										{
 											"_type": "LabelView",
@@ -1460,7 +1460,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "RockyConsoleLegacy",
+					"name": "RockyConsoleNix",
 					"ownedElements": [
 						{
 							"_type": "UMLGeneralization",
