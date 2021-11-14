@@ -15,9 +15,15 @@ file(GLOB ROCKY_SOURSES
     rocky/*.cpp
 )
 
-#find_package(Curses REQUIRED)
+if(UNIX)
+find_package(Curses REQUIRED)
 include_directories(${CURSES_INCLUDE_DIR})
+endif(UNIX)
 
-add_library(rocky SHARED ${ROCKY_HEADERS} ${ROCKY_SOURSES} ${CURSES_LIBRARIES})
-target_link_libraries(rocky ${CURSES_LIBRARIES})
+add_library(rocky SHARED ${ROCKY_HEADERS} ${ROCKY_SOURSES})
+
+if (UNIX)
+    target_link_libraries(rocky ${CURSES_LIBRARIES})
+endif(UNIX)
+
 target_include_directories(rocky PRIVATE ${CMAKE_SOURCE_DIR}/lib ${CURSES_INCLUDE_DIR})
