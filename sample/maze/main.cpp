@@ -98,6 +98,7 @@ int ProcessKey(rocky::IRockyConsole* console, const MapMaker::TMap& map) {
 			dx = 1;
 		}
 		break;
+	default: break;
 	}
 
 	if (dx != 0 || dy != 0) {

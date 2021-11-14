@@ -7,7 +7,7 @@ MapMaker::TMap MapMaker::Make(unsigned w, unsigned h)
     
     std::random_device dev;
     std::mt19937 rng(dev());
-    const std::uniform_int_distribution<std::mt19937::result_type> dist100(0, 100);
+    std::uniform_int_distribution<std::mt19937::result_type> dist100(0, 100);
 
     for (unsigned i = 0; i < w; ++i) 
     {
