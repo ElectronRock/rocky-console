@@ -1,3 +1,4 @@
+#if defined(ROCKY_WIN)
 #include <conio.h>
 #include "RockyConsoleWin.h"
 #include <cstdarg>
@@ -198,3 +199,4 @@ namespace rocky
     }
 
 }
+#endif
