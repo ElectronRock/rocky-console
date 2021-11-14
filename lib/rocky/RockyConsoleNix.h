@@ -14,6 +14,8 @@
 namespace rocky
 {
 
+    static constexpr int ConsoleCursorSize = 25;
+
     class RockyConsoleNix final : public IRockyConsole
     {
         RockyConsoleNix();

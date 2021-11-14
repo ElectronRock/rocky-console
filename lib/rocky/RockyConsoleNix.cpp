@@ -2,42 +2,40 @@
 #if !defined(ROCKY_WIN)
 #include <ncurses.h>
 #include "RockyConsoleNix.h"
-#include <stdarg.h>
-#include <stdio.h>
-#include <assert.h>
-#include <locale.h>
+#include <cstdarg>
+#include <cstdio>
+#include <cassert>
 
-static constexpr int ConsoleCursorSize = 25;
 
 namespace rocky
 {
     RockyConsoleNix::RockyConsoleNix() {
         m_colormap =
                 {
-                        {RockyColor::Black, 0},
-                        {RockyColor::Red, 1},
-                        {RockyColor::Green, 2},
-                        {RockyColor::Yellow, 3},
-                        {RockyColor::Blue, 4},
-                        {RockyColor::Magenta, 5},
-                        {RockyColor::Cyan, 6},
-                        {RockyColor::White, 7}
+                    {RockyColor::Black, 0},
+                    {RockyColor::Red, 1},
+                    {RockyColor::Green, 3},
+                    {RockyColor::Yellow, 2},
+                    {RockyColor::Blue, 4},
+                    {RockyColor::Magenta, 5},
+                    {RockyColor::Cyan, 6},
+                    {RockyColor::White, 7}
                 };
         m_keymap =
                 {
-                        {0403, RockyKey::Up},
-                        {0404, RockyKey::Left},
-                        {0405, RockyKey::Right},
-                        {0402, RockyKey::Down},
-                        {27, RockyKey::Escape},
-                        {0513, RockyKey::Insert},
-                        {0512, RockyKey::Del},
-                        {127, RockyKey::Backspace},
-                        {'\n', RockyKey::Enter},
-                        {0406, RockyKey::Home},
-                        {0550, RockyKey::End},
-                        {0523, RockyKey::PageUp},
-                        {0522, RockyKey::PageDown},
+                    {0403, RockyKey::Up},
+                    {0404, RockyKey::Left},
+                    {0405, RockyKey::Right},
+                    {0402, RockyKey::Down},
+                    {27, RockyKey::Escape},
+                    {0513, RockyKey::Insert},
+                    {0512, RockyKey::Del},
+                    {127, RockyKey::Backspace},
+                    {'\n', RockyKey::Enter},
+                    {0406, RockyKey::Home},
+                    {0550, RockyKey::End},
+                    {0523, RockyKey::PageUp},
+                    {0522, RockyKey::PageDown},
                 };
     }
 
