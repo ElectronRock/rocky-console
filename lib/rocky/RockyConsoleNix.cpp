@@ -82,7 +82,7 @@ namespace rocky
         return refresh();
     }
 
-    bool RockyConsoleNix::SetTest(const char* format, ...) {
+    bool RockyConsoleNix::SetText(const char* format, ...) {
         return false;
     }
 

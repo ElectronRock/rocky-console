@@ -91,7 +91,7 @@ namespace rocky
          * \param ... 
          * \return 
          */
-        virtual bool SetTest(const char* format, ...) = 0;
+        virtual bool SetText(const char* format, ...) = 0;
 
         /**
          * \brief 

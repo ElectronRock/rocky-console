@@ -1,3 +1,4 @@
+#include "rocky/Foundation.h"
 #if defined(ROCKY_WIN)
 #include <conio.h>
 #include "RockyConsoleWin.h"
@@ -97,7 +98,7 @@ namespace rocky
         return false; // error
     }
 
-    bool RockyConsoleWin::SetTest(const char* format, ...)
+    bool RockyConsoleWin::SetText(const char* format, ...)
     {
         va_list argList;
         char buffer[1024];
