@@ -1,4 +1,5 @@
-#include <conio.h>
+#if defined(ROCKY_WIN)
+#include <conio.h> //ну это виндовая, но она просто ругается на виндовский файл, тут if
 #include "rocky/Foundation.h"
 #include "RockyConsoleWin.h"
 #include <stdarg.h>
@@ -15,32 +16,32 @@ namespace rocky
     RockyConsoleWin::RockyConsoleWin()
     {
         m_colormap =
-        {
-            {RockyColor::Black, 0x0000},
-            {RockyColor::Blue, 0x0001},
-            {RockyColor::Green, 0x0002},
-            {RockyColor::Red, 0x0004},
-            {RockyColor::Yellow, 0x0004 | 0x0002},
-            {RockyColor::Magenta, 0x0004 | 0x0001},
-            {RockyColor::Cyan, 0x0002 | 0x0001},
-            {RockyColor::White, 0x0002 | 0x0001 | 0x0004}
-        };
+                {
+                        {RockyColor::Black, 0x0000},
+                        {RockyColor::Blue, 0x0001},
+                        {RockyColor::Green, 0x0002},
+                        {RockyColor::Red, 0x0004},
+                        {RockyColor::Yellow, 0x0004 | 0x0002},
+                        {RockyColor::Magenta, 0x0004 | 0x0001},
+                        {RockyColor::Cyan, 0x0002 | 0x0001},
+                        {RockyColor::White, 0x0002 | 0x0001 | 0x0004}
+                };
         m_keymap =
-        {
-            {-72, RockyKey::Up},
-            {-75, RockyKey::Left},
-            {-77, RockyKey::Right},
-            {-80, RockyKey::Down},
-            {27, RockyKey::Escape},
-            {-82, RockyKey::Insert},
-            {-83, RockyKey::Del},
-            {'\b', RockyKey::Backspace},
-            {'\r', RockyKey::Enter},
-            {-71, RockyKey::Home},
-            {-79, RockyKey::End},
-            {-73, RockyKey::PageUp},
-            {-81, RockyKey::PageDown},
-        };
+                {
+                        {-72, RockyKey::Up},
+                        {-75, RockyKey::Left},
+                        {-77, RockyKey::Right},
+                        {-80, RockyKey::Down},
+                        {27, RockyKey::Escape},
+                        {-82, RockyKey::Insert},
+                        {-83, RockyKey::Del},
+                        {'\b', RockyKey::Backspace},
+                        {'\r', RockyKey::Enter},
+                        {-71, RockyKey::Home},
+                        {-79, RockyKey::End},
+                        {-73, RockyKey::PageUp},
+                        {-81, RockyKey::PageDown},
+                };
     }
 
     // place implementation here    
@@ -187,3 +188,4 @@ namespace rocky
         return m_keymap[key];
     }
 }
+#endif

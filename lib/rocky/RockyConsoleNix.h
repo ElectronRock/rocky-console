@@ -9,13 +9,14 @@
 #pragma once
 
 #include "rocky/IRockyConsole.h"
+#include <unordered_map>
 
 namespace rocky
 {
 
     class RockyConsoleNix final : public IRockyConsole
     {
-        RockyConsoleNix() = default;
+        RockyConsoleNix();
 
         virtual void Initialize() override;
         virtual void Destroy() override;
@@ -33,6 +34,15 @@ namespace rocky
         virtual bool SetColor(RockyColor back, RockyColor text) override;
 
         friend IRockyConsole* Create();
+
+        short GetColor(RockyColor color);
+        static void SetCursor(int show);
+        RockyKey ConvtKey(int key);
+
+        static constexpr int ConMaxColors = 64;
+        short m_colors[ConMaxColors];
+        std::unordered_map<RockyColor, short> m_colormap;
+        std::unordered_map<int, RockyKey> m_keymap;
     };
 
 }
