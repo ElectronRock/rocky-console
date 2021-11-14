@@ -98,14 +98,14 @@ namespace rocky
 
     bool RockyConsoleWin::SetTest(const char* format, ...)
     {
-        va_list arglist;
+        va_list argList;
         char buffer[1024];
 
-        va_start(arglist, format);
+        va_start(argList, format);
 
         assert(format);
         // ReSharper disable once CppDeprecatedEntity
-        auto len = _vsnprintf(buffer, sizeof(buffer) - 1, format, arglist);
+        auto len = _vsnprintf(buffer, sizeof(buffer) - 1, format, argList);
         assert(len >= 0);
 
         return _cputs(buffer) == 0;
@@ -124,18 +124,23 @@ namespace rocky
         return ConvertKey(ch);
     }
 
+    unsigned short RockyConsoleWin::CombineColors(RockyColor back, RockyColor text)
+    {
+        return GetColor(text) | FOREGROUND_INTENSITY | GetColor(back) << 4;
+    }
+
     bool RockyConsoleWin::InitColor(unsigned index, RockyColor back, RockyColor text)
     {
-        if (index < 0 || index > ConMaxColors)
-            return 0;
-        m_colors[index] = GetColor(text) | FOREGROUND_INTENSITY | (GetColor(back) << 4);
-        return 1;
+        if (index > ConMaxColors)
+            return false;
+        m_colors[index] = CombineColors(back, text);
+        return true;
     }
 
     bool RockyConsoleWin::SetColor(RockyColor back, RockyColor text)
     {
-       auto color = GetColor(text) | FOREGROUND_INTENSITY | (GetColor(back) << 4);
-       HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+       const auto color = CombineColors(back, text);
+       auto* hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
        return SetConsoleTextAttribute(hStdOut, color) != 0;
     }
 
@@ -182,7 +187,7 @@ namespace rocky
         };
     }
 
-    short RockyConsoleWin::GetColor(RockyColor color)
+    unsigned short RockyConsoleWin::GetColor(RockyColor color)
     {
         return m_colorMap[color];
     }
