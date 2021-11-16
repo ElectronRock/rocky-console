@@ -18,8 +18,6 @@ namespace rocky
     {
         using TColorMap = std::unordered_map<RockyColor, unsigned short>;
         using TKeyMap = std::unordered_map<int, RockyKey>;
-        void InitializeColorMap();
-        void InitializeKeyMap();
         RockyConsoleWin();
 
         virtual void Initialize() override;
@@ -41,7 +39,9 @@ namespace rocky
 
         unsigned short GetColor(RockyColor color);
         unsigned short CombineColors(RockyColor back, RockyColor text);
-        static void SetCursor(int show);
+        void SetCursor(int show);
+        void InitializeColorMap();
+        void InitializeKeyMap();
         RockyKey ConvertKey(int key);
 
         static constexpr unsigned ConMaxColors = 64;
