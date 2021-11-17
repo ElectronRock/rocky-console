@@ -14,8 +14,6 @@
 namespace rocky
 {
 
-    static constexpr int ConsoleCursorSize = 25;
-
     class RockyConsoleNix final : public IRockyConsole
     {
         RockyConsoleNix();
@@ -35,16 +33,25 @@ namespace rocky
         virtual bool SetColor(unsigned index) override;
         virtual bool SetColor(RockyColor back, RockyColor text) override;
 
-        friend IRockyConsole* Create();
+        // own methods section
 
+        static constexpr unsigned ConMaxColors = 64u;
+        static constexpr unsigned ConsoleCursorSize = 25u;
+
+        using TColorMap = std::unordered_map<RockyColor, short>;
+        using TKeyMap = std::unordered_map<int, RockyKey>;
+
+        void InitializeKeyMap();
+        void InitializeColorMap();
         short GetColor(RockyColor color);
         static void SetCursor(int show);
         RockyKey ConvtKey(int key);
 
-        static constexpr int ConMaxColors = 64;
         short m_colors[ConMaxColors];
-        std::unordered_map<RockyColor, short> m_colormap;
-        std::unordered_map<int, RockyKey> m_keymap;
+        TColorMap m_colormap;
+        TKeyMap m_keymap;
+
+        friend IRockyConsole* Create();
     };
 
 }

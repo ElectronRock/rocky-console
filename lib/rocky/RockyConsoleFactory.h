@@ -16,16 +16,10 @@ namespace rocky
     class IRockyConsole;
 
     /**
-     * \brief 
-     * \return 
+     * \brief Creates an instance of the console factory implementation. 
+     * Returned object has to be deallocated by hand.
+     * \return pointer to the console graphics object
      */
     ROCKY_API IRockyConsole* Create();
-
-
-    /**
-     * \brief 
-     * \return 
-     */
-    ROCKY_API IRockyConsole* CreateLegacy();
 
 }

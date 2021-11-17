@@ -16,8 +16,7 @@ namespace rocky
         InitializeColorMap();
         InitializeKeyMap();
     }
-
-    // place implementation here    
+  
     void RockyConsoleWin::Initialize()
     {
         setlocale(LC_ALL, ".OCP");

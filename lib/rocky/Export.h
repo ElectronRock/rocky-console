@@ -10,14 +10,13 @@
 
 #include "rocky/Foundation.h"
 
-#if defined(ROCKY_WIN)
-#ifdef  ROCKY_EXPORT 
+#ifdef ROCKY_WIN
+#  ifdef  ROCKY_EXPORT 
    /*Enabled as "export" while compiling the dll project*/
-#define ROCKY_API __declspec(dllexport)  
+#     define ROCKY_API __declspec(dllexport)  
+#  else
+#     define ROCKY_API __declspec(dllimport)  /*Enabled as "import" in the Client side for using already created dll file*/
+#  endif
 #else
-   /*Enabled as "import" in the Client side for using already created dll file*/
-#define ROCKY_API __declspec(dllimport)  
-#endif
-#else
-#define ROCKY_API
+#  define ROCKY_API
 #endif
