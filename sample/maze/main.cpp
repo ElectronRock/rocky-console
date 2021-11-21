@@ -15,6 +15,7 @@
 static constexpr int ColorField = 0;
 static constexpr int ColorWall = 1;
 static constexpr int ColorPoint = 2;
+static constexpr int ColorTrace = 3;
 static constexpr int FieldPadding = 3;
 static constexpr int TitleX = 3;
 static constexpr char CharWall = '#';
@@ -34,7 +35,8 @@ std::pair<int, int> ConvtEnum(MapMaker::EntityType input)
 }
 
 static void InitColors(rocky::IRockyConsole* console) {
-	console->InitColor(ColorWall, rocky::RockyColor::Black, rocky::RockyColor::Blue);
+    console->InitColor(ColorTrace, rocky::RockyColor::Red, rocky::RockyColor::Red);
+    console->InitColor(ColorWall, rocky::RockyColor::Black, rocky::RockyColor::Blue);
 	console->InitColor(ColorField, rocky::RockyColor::Green, rocky::RockyColor::Green);
 	console->InitColor(ColorPoint, rocky::RockyColor::Red, rocky::RockyColor::Green);
 }
@@ -114,9 +116,12 @@ int ProcessKey(rocky::IRockyConsole* console, const MapMaker::TMap& map) {
 	return 0;
 }
 
-void Draw(rocky::IRockyConsole* console, const MapMaker::TMap& map, const PathFinder::TPath& path)
+void Draw(rocky::IRockyConsole* console, const PathFinder::TPath& path)
 {
-    
+    for(auto v : path)
+    {
+        CharAt(console, ' ', ColorTrace, v.x,v.y);
+    }
 }
 
 int main(int argc, char* argv[])
@@ -149,8 +154,7 @@ int main(int argc, char* argv[])
 	auto&& path = finder.Find(1, 1, map);
 	while (!quit) 
 	{
-
-		Draw(console, map, path);
+		Draw(console, path);
 	}
 
 	console->Clear();
