@@ -16,7 +16,7 @@ namespace rocky
 
     void RockyConsoleNix::InitializeKeyMap()
     {
-        m_keymap =
+        m_keyMap =
         {
             { 0403, RockyKey::Up },
             { 0404, RockyKey::Left },
@@ -36,7 +36,7 @@ namespace rocky
 
     void RockyConsoleNix::InitializeColorMap()
     {
-        m_colormap =
+        m_colorMap =
         {
             { RockyColor::Black, 0 },
             { RockyColor::Red, 1 },
@@ -126,12 +126,12 @@ namespace rocky
 
     RockyKey RockyConsoleNix::GetKey() 
     {
-        return m_keymap[getch()];
+        return m_keyMap[getch()];
     }
 
     bool RockyConsoleNix::InitColor(unsigned int index, RockyColor back, RockyColor text) 
     {
-        return init_pair(index, m_colormap[text], m_colormap[back]);
+        return init_pair(index, m_colorMap[text], m_colorMap[back]);
     }
 
     bool RockyConsoleNix::SetColor(unsigned int index) 

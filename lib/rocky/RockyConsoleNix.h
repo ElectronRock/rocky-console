@@ -45,11 +45,10 @@ namespace rocky
         void InitializeColorMap();
         short GetColor(RockyColor color);
         static void SetCursor(int show);
-        RockyKey ConvtKey(int key);
 
         short m_colors[ConMaxColors];
-        TColorMap m_colormap;
-        TKeyMap m_keymap;
+        TColorMap colorMap;
+        TKeyMap m_keyMap;
 
         friend IRockyConsole* Create();
     };
