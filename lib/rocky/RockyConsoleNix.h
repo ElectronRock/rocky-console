@@ -47,7 +47,7 @@ namespace rocky
         static void SetCursor(int show);
 
         short m_colors[ConMaxColors];
-        TColorMap colorMap;
+        TColorMap m_colorMap;
         TKeyMap m_keyMap;
 
         friend IRockyConsole* Create();

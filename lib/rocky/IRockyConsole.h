@@ -15,7 +15,7 @@ namespace rocky
 {
 
     /**
-     * \brief 
+     * \brief Common interface of the console library.
      */
     class IRockyConsole
     {
