@@ -8,6 +8,7 @@
 
 #include <cassert>
 #include "MapMaker.h"
+#include "PathFinder.h"
 #include "rocky/IRockyConsole.h"
 #include "rocky/RockyConsoleFactory.h"
 
@@ -113,6 +114,11 @@ int ProcessKey(rocky::IRockyConsole* console, const MapMaker::TMap& map) {
 	return 0;
 }
 
+void Draw(rocky::IRockyConsole* console, const MapMaker::TMap& map, const PathFinder::TPath& path)
+{
+    
+}
+
 int main(int argc, char* argv[])
 {
 	auto* console = rocky::Create();
@@ -134,16 +140,17 @@ int main(int argc, char* argv[])
 	assert(FieldWidth > 2);
 	assert(FieldHeight > 2);
 
+	
 	auto map = MapMaker::Make(FieldWidth, FieldWidth);
-
+	
 	InitialDraw(console, map);
 
-	while (!quit) {
-		if (console->IsKeyPressed()) {
-			if (ProcessKey(console, map)) {
-				quit = 1;
-			}
-		}
+	PathFinder finder(PointX, PointY);
+	auto&& path = finder.Find(1, 1, map);
+	while (!quit) 
+	{
+
+		Draw(console, map, path);
 	}
 
 	console->Clear();
