@@ -7,6 +7,8 @@
  */
 
 #include <cassert>
+#include <thread>
+#include <chrono>
 #include "MapMaker.h"
 #include "PathFinder.h"
 #include "rocky/IRockyConsole.h"
@@ -79,6 +81,12 @@ void Draw(rocky::IRockyConsole* console, const PathFinder::TPath& path)
 	CharAt(console, CharPoint, ColorPoint, PointX, PointY);
 }
 
+void FLushPath(rocky::IRockyConsole* console, const PathFinder::TPath& path)
+{
+	for (auto v : path)
+		CharAt(console, ' ', ColorField, v.x + FieldX, v.y + FieldY);
+}
+
 int main(int argc, char* argv[])
 {
 	auto* console = rocky::Create();
@@ -110,10 +118,19 @@ int main(int argc, char* argv[])
 	PathFinder::TPath path;
 	path.emplace_back(PointX - FieldX, PointY - FieldY);
 
-	while (console->GetKey() != rocky::RockyKey::Escape) 
+	while (!console->IsKeyPressed() || console->GetKey() != rocky::RockyKey::Escape)
 	{
+		auto prevSize = path.size();
 		finder.DoStep(desiredX, desiredY, map, path);
+		if(prevSize == path.size())
+		{
+			FLushPath(console, path);
+			path.clear();
+			path.emplace_back(PointX - FieldX, PointY - FieldY);
+		}
+
 		Draw(console, path);
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	}
 
 	console->Clear();
