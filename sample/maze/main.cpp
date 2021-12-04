@@ -120,16 +120,6 @@ int main(int argc, char* argv[])
 
 	while (!console->IsKeyPressed() || console->GetKey() != rocky::RockyKey::Escape)
 	{
-		auto prevSize = path.size();
-		finder.DoStep(desiredX, desiredY, map, path);
-		if(prevSize == path.size())
-		{
-			FLushPath(console, path);
-			path.clear();
-			path.emplace_back(PointX - FieldX, PointY - FieldY);
-		}
-
-		Draw(console, path);
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	}
 
