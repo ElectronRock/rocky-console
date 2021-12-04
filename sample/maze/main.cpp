@@ -112,7 +112,9 @@ int main(int argc, char* argv[])
 	
 	InitialDraw(console, map);
 
-	PathFinder finder(PointX, PointY);
+	PathFinder finder(PointX, PointY, [=](PathFinder::TPath path) {
+        Draw(console, path);
+    });
 	const unsigned desiredX = 50;
 	const unsigned desiredY = 50;
 	PathFinder::TPath path;

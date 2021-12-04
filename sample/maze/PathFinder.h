@@ -9,6 +9,7 @@
 #pragma once
 
 #include <deque>
+#include <functional>
 #include "MapMaker.h"
 
 class PathFinder final {
@@ -24,15 +25,16 @@ public:
     };
 
     using TPath = std::deque<Vector2>;
+    using TCallBack = std::function<void(TPath&)>;
+    PathFinder(unsigned x, unsigned y, TCallBack callBack);
 
-    PathFinder(unsigned x, unsigned y);
-
-    bool DoStep(unsigned desiredX, unsigned desiredY, const MapMaker::TMap& map, TPath& path);
     TPath Find(unsigned desiredX, unsigned desiredY, const MapMaker::TMap& map);
 
 private:
     bool FindImpl(Vector2 start, Vector2 target, TPath& buffer, const MapMaker::TMap& map);
-    static bool CanMove(unsigned x, unsigned y, const TPath& buffer, const MapMaker::TMap& map);
+    bool CanMove(unsigned x, unsigned y, const TPath& buffer, const MapMaker::TMap& map);
+
+    TCallBack m_callback;
 
     unsigned m_x;
     unsigned m_y;
