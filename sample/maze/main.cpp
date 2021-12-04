@@ -93,7 +93,7 @@ int ProcessKey(rocky::IRockyConsole* console, const MapMaker::TMap& map) {
 			dx = -1;
 		}
 		break;
-
+ 
 	case rocky::RockyKey::Right:
 		if (PointX + 1 < FieldX + FieldWidth - 1) {
 			dx = 1;
@@ -116,7 +116,9 @@ int ProcessKey(rocky::IRockyConsole* console, const MapMaker::TMap& map) {
 
 void Draw(rocky::IRockyConsole* console, const MapMaker::TMap& map, const PathFinder::TPath& path)
 {
-    
+    for(auto&& p : path){
+
+	}
 }
 
 int main(int argc, char* argv[])
@@ -147,9 +149,8 @@ int main(int argc, char* argv[])
 
 	PathFinder finder(PointX, PointY);
 	auto&& path = finder.Find(1, 1, map);
-	while (!quit) 
+	while (true) 
 	{
-
 		Draw(console, map, path);
 	}
 
