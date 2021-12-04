@@ -67,59 +67,16 @@ static void InitialDraw(rocky::IRockyConsole* console, const MapMaker::TMap& map
 	CharAt(console, CharPoint, ColorPoint, PointX, PointY);
 }
 
-/* Returns 1 if quit. */
-int ProcessKey(rocky::IRockyConsole* console, const MapMaker::TMap& map) {
-	// position change
-	int dx = 0;
-	int dy = 0;
-	auto key = console->GetKey();
-
-	switch (key) {
-	case rocky::RockyKey::Escape:
-		return 1;
-
-	case rocky::RockyKey::Up:
-		if (PointY - 1 > FieldY) {
-			dy = -1;
-		}
-		break;
-
-	case rocky::RockyKey::Down:
-		if (PointY + 1 < FieldY + FieldHeight - 1) {
-			dy = 1;
-		}
-		break;
-
-	case rocky::RockyKey::Left:
-		if (PointX - 1 > FieldX) {
-			dx = -1;
-		}
-		break;
- 
-	case rocky::RockyKey::Right:
-		if (PointX + 1 < FieldX + FieldWidth - 1) {
-			dx = 1;
-		}
-		break;
-	default: break;
-	}
-
-	if (dx != 0 || dy != 0) {
-		if (map[PointX + dx - FieldX][PointY + dy - FieldY] != MapMaker::EntityType::Wall)
-		{
-			CharAt(console, CharField, ColorField, PointX, PointY);
-			PointX += dx;
-			PointY += dy;
-			CharAt(console, CharPoint, ColorPoint, PointX, PointY);
-		}
-	}
-	return 0;
-}
-
 void Draw(rocky::IRockyConsole* console, const PathFinder::TPath& path)
 {
     for(auto v : path)
-        CharAt(console, ' ', ColorTrace, v.x,v.y);
+        CharAt(console, ' ', ColorTrace, v.x + FieldX, v.y + FieldY);
+
+	auto&& point = path.back();
+	PointY = point.y + FieldY;
+	PointX = point.x + FieldX;
+
+	CharAt(console, CharPoint, ColorPoint, PointX, PointY);
 }
 
 int main(int argc, char* argv[])
@@ -148,9 +105,14 @@ int main(int argc, char* argv[])
 	InitialDraw(console, map);
 
 	PathFinder finder(PointX, PointY);
-	auto&& path = finder.Find(1, 1, map);
-	while (true) 
+	const unsigned desiredX = 50;
+	const unsigned desiredY = 50;
+	PathFinder::TPath path;
+	path.emplace_back(PointX - FieldX, PointY - FieldY);
+
+	while (console->GetKey() != rocky::RockyKey::Escape) 
 	{
+		finder.DoStep(desiredX, desiredY, map, path);
 		Draw(console, path);
 	}
 
