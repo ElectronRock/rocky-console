@@ -16,9 +16,9 @@ public:
 
     struct Vector2
     {
-        Vector2(unsigned ix, unsigned iy): x(ix), y(iy) {}
-        bool operator==(const Vector2& rhs) const {return((x==rhs.x)&&(y==rhs.y));}
-        bool operator!=(const Vector2& rhs) const {return(!(*this==rhs));}
+        Vector2(unsigned ix, unsigned iy) : x(ix), y(iy) {}
+        bool operator==(const Vector2& rhs) const { return x == rhs.x && y == rhs.y; }
+        bool operator!=(const Vector2& rhs) const { return !(*this == rhs); }
         unsigned x;
         unsigned y;
     };
@@ -27,10 +27,13 @@ public:
 
     PathFinder(unsigned x, unsigned y);
 
+    bool DoStep(unsigned desiredX, unsigned desiredY, const MapMaker::TMap& map, TPath& path);
     TPath Find(unsigned desiredX, unsigned desiredY, const MapMaker::TMap& map);
-    
+
 private:
-    bool FindImpl(PathFinder::Vector2 start, PathFinder::Vector2 target, PathFinder::TPath &buffer, const MapMaker::TMap& map);
+    bool FindImpl(Vector2 start, Vector2 target, TPath& buffer, const MapMaker::TMap& map);
+    static bool CanMove(unsigned x, unsigned y, const TPath& buffer, const MapMaker::TMap& map);
+
     unsigned m_x;
     unsigned m_y;
 };

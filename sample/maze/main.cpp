@@ -146,12 +146,12 @@ int main(int argc, char* argv[])
 	assert(FieldHeight > 2);
 
 	
-	auto map = MapMaker::Make(FieldWidth, FieldWidth);
+	auto map = MapMaker::Make(FieldWidth, FieldHeight);
 	
 	InitialDraw(console, map);
 
-	PathFinder finder(PointX, PointY);
-	auto&& path = finder.Find(1, 1, map);
+	PathFinder finder(PointX - FieldX, PointY - FieldY);
+	auto&& path = finder.Find(PointX / 2, PointY / 2, map);
 	while (!quit) 
 	{
 		Draw(console, path);

@@ -1,5 +1,7 @@
 #include "PathFinder.h"
 
+#include <cassert>
+
 PathFinder::PathFinder(unsigned x, unsigned y)
     : m_x(x)
     , m_y(y)
@@ -7,50 +9,65 @@ PathFinder::PathFinder(unsigned x, unsigned y)
 
 }
 
+bool PathFinder::DoStep(unsigned desiredX, unsigned desiredY, const MapMaker::TMap& map, TPath& path)
+{
+    assert(!path.empty());
+    auto&& start = path.back();
+    if (start == Vector2(desiredX, desiredY))
+        return true;
+
+    if (start.x + 1 < map.size() && CanMove(start.x + 1, start.y, path, map))
+        path.emplace_back(start.x, start.y);
+    else if (start.x > 1 && CanMove(start.x - 1, start.y, buffer, map))buffer.emplace_back(start.x, start.y);
+
+}
+
 PathFinder::TPath PathFinder::Find(unsigned desiredX, unsigned desiredY, const MapMaker::TMap& map)
 {
-    PathFinder::TPath output;
-    FindImpl({m_x, m_y}, {desiredX, desiredY}, output, map);
+    TPath output;
+    FindImpl({ m_x, m_y }, { desiredX, desiredY }, output, map);
     return output;
 }
 
-bool PathFinder::FindImpl(PathFinder::Vector2 start, PathFinder::Vector2 target, PathFinder::TPath &buffer, const MapMaker::TMap& map) {
-    if(start==target)
+bool PathFinder::FindImpl(Vector2 start, Vector2 target, TPath& buffer, const MapMaker::TMap& map) {
+    if (start == target)
     {
-        buffer.emplace_back(start.x,start.y);
+        buffer.emplace_back(start.x, start.y);
         return true;
     }
-    if(start.x+1<map.size() && Vector2{start.x+1, start.y}!=buffer.back() && map[start.x+1][start.y]!=MapMaker::EntityType::Wall)
+
+    if (start.x + 1 < map.size() && CanMove(start.x + 1, start.y, buffer, map))
     {
-        buffer.emplace_back(start.x,start.y);
-        if(FindImpl({start.x+1, start.y}, target, buffer, map))
+        buffer.emplace_back(start.x, start.y);
+        if (FindImpl({ start.x + 1, start.y }, target, buffer, map))
         {
             return true;
         }
         buffer.pop_back();
     }
-    if(start.x-1>0 && Vector2{start.x-1, start.y}!=buffer.back() && map[start.x-1][start.y]!=MapMaker::EntityType::Wall)
+
+    if (start.x > 1 && CanMove(start.x - 1, start.y, buffer, map))
     {
-        buffer.emplace_back(start.x,start.y);
-        if(FindImpl({start.x-1, start.y}, target, buffer, map))
+        buffer.emplace_back(start.x, start.y);
+        if (FindImpl({ start.x - 1, start.y }, target, buffer, map))
         {
             return true;
         }
         buffer.pop_back();
     }
-    if(start.y+1<map[0].size() && Vector2{start.x, start.y+1}!=buffer.back() && map[start.x][start.y+1]!=MapMaker::EntityType::Wall)
+    if (start.y + 1 < map[0].size() && CanMove(start.x, start.y + 1, buffer, map))
     {
-        buffer.emplace_back(start.x,start.y);
-        if(FindImpl({start.x, start.y+1}, target, buffer, map))
+        buffer.emplace_back(start.x, start.y);
+        if (FindImpl({ start.x, start.y + 1 }, target, buffer, map))
         {
             return true;
         }
         buffer.pop_back();
     }
-    if(start.y-1>0 && Vector2{start.x, start.y-1}!=buffer.back() && map[start.x][start.y-1]!=MapMaker::EntityType::Wall)
+    if (start.y > 1 && CanMove(start.x, start.y - 1, buffer, map))
     {
-        buffer.emplace_back(start.x,start.y);
-        if(FindImpl({start.x, start.y+1}, target, buffer, map))
+        buffer.emplace_back(start.x, start.y);
+        if (FindImpl({ start.x, start.y - 1 }, target, buffer, map))
         {
             return true;
         }
@@ -59,3 +76,8 @@ bool PathFinder::FindImpl(PathFinder::Vector2 start, PathFinder::Vector2 target,
     return false;
 }
 
+bool PathFinder::CanMove(unsigned x, unsigned y, const TPath& buffer, const MapMaker::TMap& map)
+{
+    return map[x][y] != MapMaker::EntityType::Wall
+        && find(begin(buffer), end(buffer), Vector2(x, y)) == end(buffer);
+}
