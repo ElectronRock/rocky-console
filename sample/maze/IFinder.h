@@ -8,18 +8,24 @@
 
 #pragma once
 
-#include <vector>
+#include <deque>
+#include "Vector2.h"
 
-enum class EntityType 
+enum class EntityType;
+
+namespace Path
 {
-	Field,
-	Wall,
-};
 
-class MapMaker final {
+class IFinder 
+{
 public:
+    virtual ~IFinder() = default;
+    IFinder() = default;
 
-	using TMap = std::vector<std::vector<EntityType>>;
+    using TPath = std::deque<Vector2>;
+    using TMap = std::vector<std::vector<EntityType>>;
 
-	static TMap Make(unsigned w, unsigned h);
+    virtual TPath Find(const Vector2& from, const Vector2& to, const TMap& map) const = 0;
 };
+
+}

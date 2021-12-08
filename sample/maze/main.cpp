@@ -10,7 +10,7 @@
 #include <thread>
 #include <chrono>
 #include "MapMaker.h"
-#include "PathFinder.h"
+#include "FinderNaive.h"
 #include "rocky/IRockyConsole.h"
 #include "rocky/RockyConsoleFactory.h"
 
@@ -28,11 +28,11 @@ static int FieldX, FieldY; // top-left corner
 static int FieldWidth, FieldHeight;
 static int PointX, PointY;
 
-std::pair<int, int> ConvtEnum(MapMaker::EntityType input)
+std::pair<int, int> ConvtEnum(EntityType input)
 {
 	switch (input) {
-	case MapMaker::EntityType::Field: return { ' ' , ColorField };
-	case MapMaker::EntityType::Wall: return { '#', ColorWall };
+	case EntityType::Field: return { ' ' , ColorField };
+	case EntityType::Wall: return { '#', ColorWall };
 	}
 }
 
@@ -69,7 +69,7 @@ static void InitialDraw(rocky::IRockyConsole* console, const MapMaker::TMap& map
 	CharAt(console, CharPoint, ColorPoint, PointX, PointY);
 }
 
-void Draw(rocky::IRockyConsole* console, const PathFinder::TPath& path)
+void Draw(rocky::IRockyConsole* console, const Path::FinderNaive::TPath& path)
 {
     for(auto v : path)
         CharAt(console, ' ', ColorTrace, v.x + FieldX, v.y + FieldY);
@@ -81,7 +81,7 @@ void Draw(rocky::IRockyConsole* console, const PathFinder::TPath& path)
 	CharAt(console, CharPoint, ColorPoint, PointX, PointY);
 }
 
-void FLushPath(rocky::IRockyConsole* console, const PathFinder::TPath& path)
+void FlushPath(rocky::IRockyConsole* console, const Path::IFinder::TPath& path)
 {
 	for (auto v : path)
 		CharAt(console, ' ', ColorField, v.x + FieldX, v.y + FieldY);
@@ -112,26 +112,19 @@ int main(int argc, char* argv[])
 	
 	InitialDraw(console, map);
 
-	PathFinder finder(PointX, PointY);
-	const unsigned desiredX = 50;
-	const unsigned desiredY = 50;
-	PathFinder::TPath path;
-	path.emplace_back(PointX - FieldX, PointY - FieldY);
-
-	while (!console->IsKeyPressed() || console->GetKey() != rocky::RockyKey::Escape)
+	Path::FinderNaive::TPath prevPath;
+	Path::FinderNaive finder(
+	[&](const Path::FinderNaive::TPath& path) mutable
 	{
-		auto prevSize = path.size();
-		finder.DoStep(desiredX, desiredY, map, path);
-		if(prevSize == path.size())
-		{
-			FLushPath(console, path);
-			path.clear();
-			path.emplace_back(PointX - FieldX, PointY - FieldY);
-		}
+		if(prevPath.size() > path.size())
+			FlushPath(console, prevPath);
 
 		Draw(console, path);
+		prevPath = path;
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	}
+	});
+	
+	auto&& path = finder.Find(Path::Vector2{0, 0}, Path::Vector2{ max_x / 2, max_y / 2}, map);
 
 	console->Clear();
 	console->Destroy();
