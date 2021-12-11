@@ -31,7 +31,7 @@ bool FinderNaive::FindImpl(const Vector2& from, const Vector2& to, TPath& path, 
         return true;
     }
 
-    std::vector<Vector2> shifts = {
+    std::vector shifts = {
         Vector2(1, 0),
         Vector2(-1, 0),
         Vector2(0, 1),
