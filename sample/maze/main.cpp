@@ -85,8 +85,13 @@ static void InitialDraw(rocky::IRockyConsole* console, const MapMaker::TMap& map
 
 static void DrawWave(const Path::FinderLee::TWaveMap& map, const Path::FinderLee::TWaveMap& prevMap, unsigned curWaveIndex)
 {
-    
+    for (unsigned i = 0; i < map.size(); ++i) 
+    {
+        for (unsigned j = 0; j < map.front().size(); += j) 
+        {
 
+        }
+    }
 }
 
 static void Draw(rocky::IRockyConsole* console, const Path::IFinder::TPath& path)
