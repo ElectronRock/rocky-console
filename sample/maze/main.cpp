@@ -11,7 +11,7 @@
 #include <thread>
 #include <chrono>
 #include "MapMaker.h"
-#include "FinderLee.h"
+#include "FinderLeeRefined.h"
 #include "rocky/IRockyConsole.h"
 #include "rocky/RockyConsoleFactory.h"
 
@@ -83,7 +83,7 @@ static void InitialDraw(rocky::IRockyConsole* console, const MapMaker::TMap& map
     CharAt(console, CharPoint, ColorPoint, PointX, PointY);
 }
 
-static void DrawWave(const Path::FinderLee::TWaveMap& map, const Path::FinderLee::TWaveMap& prevMap, unsigned curWaveIndex)
+static void DrawWave(const Path::FinderLeeRefined::TWaveMap& map, const Path::FinderLeeRefined::TWaveMap& prevMap, unsigned curWaveIndex)
 {
     for (unsigned i = 0; i < map.size(); ++i) 
     {
@@ -139,12 +139,12 @@ int main(int argc, char* argv[])
     auto map = MapMaker::Make(FieldWidth, FieldHeight);
 
     InitialDraw(console, map);
-    Path::FinderLee::TWaveMap prevMap;
+    Path::FinderLeeRefined::TWaveMap prevMap;
     unsigned curWaveIndex = 0;
-    Path::FinderLee finder(
-        [&](const Path::FinderLee::TWaveMap& map) mutable
+    Path::FinderLeeRefined finder(
+        [&](const Path::FinderLeeRefined::TWaveMap& map) mutable
         {
-            DrawWave(map, prevMap, curIndex);
+            DrawWave(map, prevMap, curWaveIndex);
             prevMap = map;
             ++curWaveIndex;
         }

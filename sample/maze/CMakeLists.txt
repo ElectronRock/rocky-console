@@ -13,7 +13,7 @@ file(GLOB MAZE__SOURSES
     *.cpp
 )
 
-add_executable(maze ${MAZE__HEADERS} ${MAZE__SOURSES})
+add_executable(maze ${MAZE__HEADERS} ${MAZE__SOURSES} FinderLeeRefined.cpp FinderLeeRefined.h)
 
 target_include_directories(maze PRIVATE ${CMAKE_SOURCE_DIR}/lib)
 target_link_libraries(maze rocky)
