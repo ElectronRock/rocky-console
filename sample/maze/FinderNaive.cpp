@@ -6,6 +6,17 @@
 namespace Path
 {
 
+namespace 
+{
+const auto shifts = 
+{
+    Vector2(1, 0),
+    Vector2(-1, 0),
+    Vector2(0, 1),
+    Vector2(0, -1)
+};
+}
+
 bool FinderNaive::CanMove(const Vector2& to, const TPath& path, const FinderNaive::TMap& map)
 {
     return to.x > 0 && to.y > 0 && to.x < map.size() && to.x < map.back().size()
@@ -30,13 +41,6 @@ bool FinderNaive::FindImpl(const Vector2& from, const Vector2& to, TPath& path, 
         path.emplace_back(from);
         return true;
     }
-
-    std::vector shifts = {
-        Vector2(1, 0),
-        Vector2(-1, 0),
-        Vector2(0, 1),
-        Vector2(0, -1)
-    };
 
     for(auto&& shift : shifts)
     {

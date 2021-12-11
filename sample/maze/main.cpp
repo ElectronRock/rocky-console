@@ -7,6 +7,7 @@
  */
 
 #include <cassert>
+#include <iostream>
 #include <thread>
 #include <chrono>
 #include "MapMaker.h"
@@ -36,7 +37,8 @@ std::pair<int, int> ConvtEnum(EntityType input)
     }
 }
 
-static void InitColors(rocky::IRockyConsole* console) {
+static void InitColors(rocky::IRockyConsole* console) 
+{
     console->InitColor(ColorTrace, rocky::RockyColor::Red, rocky::RockyColor::Red);
     console->InitColor(ColorWall, rocky::RockyColor::Black, rocky::RockyColor::Blue);
     console->InitColor(ColorField, rocky::RockyColor::Green, rocky::RockyColor::Green);
@@ -68,7 +70,7 @@ static void InitialDraw(rocky::IRockyConsole* console, const MapMaker::TMap& map
             auto p = ConvtEnum(map[i][j]);
             CharAt(console, p.first, p.second, FieldX + i, FieldY + j);
             if (p.first != CharWall) 
-{
+			{
                 PointX = FieldX + i; PointY = FieldY + j;
             }
         }
@@ -132,11 +134,17 @@ int main(int argc, char* argv[])
             Draw(console, path);
             prevPath = path;
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        });
+        }
+	);
 
-    auto&& path = finder.Find(Path::Vector2{ 0, 0 }, Path::Vector2{ max_x / 2, max_y / 2 }, map);
+    auto&& path = finder.Find(Path::Vector2{ PointX - FieldX, PointY - FieldY }, 
+		Path::Vector2{ (int)max_x / 2, (int)max_y / 2 }, map);
 
-    console->Clear();
+	std::cout << "Path size:" << path.size() << std::endl;
+	char c;
+    std::cin >> c;
+	//console->Clear();
     console->Destroy();
+
     return 0;
 }
