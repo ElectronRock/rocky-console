@@ -19,6 +19,8 @@ static constexpr int ColorField = 0;
 static constexpr int ColorWall = 1;
 static constexpr int ColorPoint = 2;
 static constexpr int ColorTrace = 3;
+static constexpr int ColorWaveFront = 4;
+static constexpr int ColorWave = 5;
 static constexpr int FieldPadding = 3;
 static constexpr int TitleX = 3;
 static constexpr char CharWall = '#';
@@ -40,6 +42,9 @@ std::pair<int, int> ConvtEnum(EntityType input)
 static void InitColors(rocky::IRockyConsole* console) 
 {
     console->InitColor(ColorTrace, rocky::RockyColor::Red, rocky::RockyColor::Red);
+    console->InitColor(ColorWaveFront, rocky::RockyColor::Cyan, rocky::RockyColor::Cyan);
+    console->InitColor(ColorWave, rocky::RockyColor::White, rocky::RockyColor::White);
+
     console->InitColor(ColorWall, rocky::RockyColor::Black, rocky::RockyColor::Blue);
     console->InitColor(ColorField, rocky::RockyColor::Green, rocky::RockyColor::Green);
     console->InitColor(ColorPoint, rocky::RockyColor::Red, rocky::RockyColor::Green);
@@ -78,7 +83,13 @@ static void InitialDraw(rocky::IRockyConsole* console, const MapMaker::TMap& map
     CharAt(console, CharPoint, ColorPoint, PointX, PointY);
 }
 
-void Draw(rocky::IRockyConsole* console, const Path::IFinder::TPath& path)
+static void DrawWave(const Path::FinderLee::TWaveMap& map, const Path::FinderLee::TWaveMap& prevMap, unsigned curWaveIndex)
+{
+    
+
+}
+
+static void Draw(rocky::IRockyConsole* console, const Path::IFinder::TPath& path)
 {
     for (auto v : path)
         CharAt(console, ' ', ColorTrace, v.x + FieldX, v.y + FieldY);
@@ -93,7 +104,7 @@ void Draw(rocky::IRockyConsole* console, const Path::IFinder::TPath& path)
     CharAt(console, CharPoint, ColorPoint, PointX, PointY);
 }
 
-void FlushPath(rocky::IRockyConsole* console, const Path::IFinder::TPath& path)
+static void FlushPath(rocky::IRockyConsole* console, const Path::IFinder::TPath& path)
 {
     for (auto v : path)
         CharAt(console, ' ', ColorField, v.x + FieldX, v.y + FieldY);
@@ -123,18 +134,22 @@ int main(int argc, char* argv[])
     auto map = MapMaker::Make(FieldWidth, FieldHeight);
 
     InitialDraw(console, map);
-
+    Path::FinderLee::TWaveMap prevMap;
+    unsigned curWaveIndex = 0;
     Path::FinderLee finder(
         [&](const Path::FinderLee::TWaveMap& map) mutable
         {
-            // TODO
+            DrawWave(map, prevMap, curIndex);
+            prevMap = map;
+            ++curWaveIndex;
         }
 	);
 
     auto&& path = finder.Find(Path::Vector2{ PointX - FieldX, PointY - FieldY }, 
 		Path::Vector2{ (int)max_x / 2, (int)max_y / 2 }, map);
 
-	std::cout << "Path size:" << path.size() << std::endl;
+    Draw(console, path);
+	
 	char c;
     std::cin >> c;
 	//console->Clear();
