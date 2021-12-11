@@ -11,7 +11,7 @@
 #include <thread>
 #include <chrono>
 #include "MapMaker.h"
-#include "FinderNaive.h"
+#include "FinderLee.h"
 #include "rocky/IRockyConsole.h"
 #include "rocky/RockyConsoleFactory.h"
 
@@ -78,7 +78,7 @@ static void InitialDraw(rocky::IRockyConsole* console, const MapMaker::TMap& map
     CharAt(console, CharPoint, ColorPoint, PointX, PointY);
 }
 
-void Draw(rocky::IRockyConsole* console, const Path::FinderNaive::TPath& path)
+void Draw(rocky::IRockyConsole* console, const Path::IFinder::TPath& path)
 {
     for (auto v : path)
         CharAt(console, ' ', ColorTrace, v.x + FieldX, v.y + FieldY);
@@ -124,16 +124,10 @@ int main(int argc, char* argv[])
 
     InitialDraw(console, map);
 
-    Path::FinderNaive::TPath prevPath;
-    Path::FinderNaive finder(
-        [&](const Path::FinderNaive::TPath& path) mutable
+    Path::FinderLee finder(
+        [&](const Path::FinderLee::TWaveMap& map) mutable
         {
-            if (prevPath.size() > path.size())
-                FlushPath(console, prevPath);
-
-            Draw(console, path);
-            prevPath = path;
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            // TODO
         }
 	);
 
