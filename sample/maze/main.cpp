@@ -89,12 +89,12 @@ static void DrawWave(rocky::IRockyConsole* console, const Path::FinderLeeRefined
     {
         for (unsigned j = 0; j < map.front().size(); ++j) 
         {
-            if (prevMap.empty() || map[i][j] != prevMap[i][j])
+            if (prevMap.empty() || map[i][j] != prevMap[i][j] || map[i][j] < curWaveIndex)// take to account waves from previous simulation step
             {
-                if (map[i][j] > 0) 
+                if (map[i][j] > 0 ) 
                 {
                     auto color = curWaveIndex == map[i][j] ? ColorWaveFront : ColorWave;
-                    CharAt(console, CharField, ColorPoint, i + FieldX, j + FieldY);
+                    CharAt(console, CharField, color, i + FieldX, j + FieldY);
                 }
             }
         }
@@ -147,13 +147,11 @@ int main(int argc, char* argv[])
 
     InitialDraw(console, map);
     Path::FinderLeeRefined::TWaveMap prevMap;
-    unsigned curWaveIndex = 0;
     Path::FinderLeeRefined finder(
-        [&](const Path::FinderLeeRefined::TWaveMap& map) mutable
+        [&](const Path::FinderLeeRefined::TWaveMap& map, unsigned waveIndex) mutable
         {
-            DrawWave(console, map, prevMap, curWaveIndex);
+            DrawWave(console, map, prevMap, waveIndex);
             prevMap = map;
-            ++curWaveIndex;
             std::this_thread::sleep_for(std::chrono::microseconds(50000));
         }
 	);

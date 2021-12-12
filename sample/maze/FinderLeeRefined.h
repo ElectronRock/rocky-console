@@ -19,7 +19,7 @@ namespace Path
     {
     public:
         using TWaveMap = std::vector<std::vector<int>>;
-        using TOnStepCallback = std::function<void(const TWaveMap&)>;
+        using TOnStepCallback = std::function<void(const TWaveMap&, unsigned)>;
 
         FinderLeeRefined(TOnStepCallback&& callback)
                 : m_callback(std::move(callback))
