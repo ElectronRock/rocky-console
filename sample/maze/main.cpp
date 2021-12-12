@@ -83,13 +83,20 @@ static void InitialDraw(rocky::IRockyConsole* console, const MapMaker::TMap& map
     CharAt(console, CharPoint, ColorPoint, PointX, PointY);
 }
 
-static void DrawWave(const Path::FinderLeeRefined::TWaveMap& map, const Path::FinderLeeRefined::TWaveMap& prevMap, unsigned curWaveIndex)
+static void DrawWave(rocky::IRockyConsole* console, const Path::FinderLeeRefined::TWaveMap& map, const Path::FinderLeeRefined::TWaveMap& prevMap, unsigned curWaveIndex)
 {
     for (unsigned i = 0; i < map.size(); ++i) 
     {
-        for (unsigned j = 0; j < map.front().size(); += j) 
+        for (unsigned j = 0; j < map.front().size(); ++j) 
         {
-
+            if (prevMap.empty() || map[i][j] != prevMap[i][j])
+            {
+                if (map[i][j] > 0) 
+                {
+                    auto color = curWaveIndex == map[i][j] ? ColorWaveFront : ColorWave;
+                    CharAt(console, CharField, ColorPoint, i + FieldX, j + FieldY);
+                }
+            }
         }
     }
 }
@@ -144,9 +151,10 @@ int main(int argc, char* argv[])
     Path::FinderLeeRefined finder(
         [&](const Path::FinderLeeRefined::TWaveMap& map) mutable
         {
-            DrawWave(map, prevMap, curWaveIndex);
+            DrawWave(console, map, prevMap, curWaveIndex);
             prevMap = map;
             ++curWaveIndex;
+            std::this_thread::sleep_for(std::chrono::microseconds(50000));
         }
 	);
 

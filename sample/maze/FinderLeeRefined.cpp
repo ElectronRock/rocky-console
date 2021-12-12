@@ -40,6 +40,7 @@ namespace Path
 
     void FinderLeeRefined::RunWaves(const Vector2& from, const Vector2& to, TWaveMap& map) const
     {
+        auto curWaveIndex = 0;
         std::deque<Node> waves = {{from, 0}};
         map[from.x][from.y] = 0;
         do
@@ -52,11 +53,14 @@ namespace Path
                 {
                     map[desired.x][desired.y] = node.wave + 1;
                     waves.emplace_back(desired, node.wave + 1);
+                    if (node.wave > curWaveIndex) 
+                    {
+                        ++curWaveIndex;
+                        m_callback(map);
+                    }
                 }
             }
             waves.pop_front();
-
-            m_callback(map);
         }
         while(!waves.empty() && map[to.x][to.y] == Free);
     }

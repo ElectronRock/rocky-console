@@ -7,16 +7,16 @@ namespace Path
 
 namespace 
 {
-    const auto shifts = 
-    {
-        Vector2(1, 0),
-        Vector2(-1, 0),
-        Vector2(0, 1),
-        Vector2(0, -1)
-    };
+const auto shifts = 
+{
+    Vector2(1, 0),
+    Vector2(-1, 0),
+    Vector2(0, 1),
+    Vector2(0, -1)
+};
 
-    constexpr int Wall = -1;
-    constexpr int Free = -2;
+constexpr int Wall = -1;
+constexpr int Free = -2;
 }
 
 FinderLee::TPath FinderLee::Find(const Vector2& from, const Vector2& to, const TMap& map) const
