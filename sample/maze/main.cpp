@@ -163,7 +163,6 @@ int main(int argc, char* argv[])
 	
 	char c;
     std::cin >> c;
-	//console->Clear();
     console->Destroy();
 
     return 0;

@@ -19,7 +19,8 @@ namespace Path
         constexpr int Free = -2;
     }
 
-    struct Node {
+    struct Node 
+    {
         Node(Vector2 coords_inp, int wave_inp) : coordinates(coords_inp), wave(wave_inp) {}
         Vector2 coordinates = {0, 0};
         int wave = 0;
