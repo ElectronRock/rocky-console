@@ -61,7 +61,6 @@ static void InitialDraw(rocky::IRockyConsole* console, const MapMaker::TMap& map
 {
     console->Clear();
     console->GoToXY(TitleX, TitleY);
-    console->SetText("Use arrows to move point, use Esc to exit.");
     int i, j;
     for (i = 0; i < FieldWidth; ++i)
     {
