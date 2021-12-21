@@ -5,34 +5,26 @@
 namespace Path
 {
 
-    struct Node 
-    {
-        Node(Vector2 coords_inp, int wave_inp) : coordinates(coords_inp), wave(wave_inp) {}
-        Vector2 coordinates = {0, 0};
-        int wave = 0;
-    };
-
-
     void FinderLeeRefined::RunWaves(const Vector2& from, const Vector2& to, TWaveMap& map) const
     {
         auto curWaveIndex = 0u;
-        std::deque<Node> waves = {{from, 0}};
+        std::deque<Vector2> waves = {from};
         map[from.x][from.y] = 0;
         do
         {
-            Node node = waves.front();
-            if (node.wave > curWaveIndex)
+            Vector2 node = waves.front();
+            if (map[node.x][node.y] > curWaveIndex)
             {
                 ++curWaveIndex;
                 m_callback(map, curWaveIndex);
             }
             for(auto&& shift : shifts)
             {
-                auto desired = node.coordinates + shift;
+                auto desired = node + shift;
                 if(Suitable(desired, map) && map[desired.x][desired.y] == Free)
                 {
-                    map[desired.x][desired.y] = node.wave + 1;
-                    waves.emplace_back(desired, node.wave + 1);
+                    map[desired.x][desired.y] = map[node.x][node.y] + 1;
+                    waves.emplace_back(desired);
                 }
             }
             waves.pop_front();
