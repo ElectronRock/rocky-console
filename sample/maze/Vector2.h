@@ -13,7 +13,7 @@ namespace Path
 
 struct Vector2 final
 {
-    Vector2(int ix = 0, int iy = 0) 
+    constexpr Vector2(int ix = 0, int iy = 0)
         : x(ix)
         , y(iy) 
     {}

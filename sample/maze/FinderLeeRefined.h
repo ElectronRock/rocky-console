@@ -10,33 +10,17 @@
 
 #include <deque>
 #include <functional>
-#include "IFinder.h"
+#include "FinderLeeBase.h"
 
-namespace Path
-{
+namespace Path {
 
-    class FinderLeeRefined final  : public IFinder
-    {
+    class FinderLeeRefined final : public FinderLeeBase {
     public:
-        using TWaveMap = std::vector<std::vector<int>>;
-        using TOnStepCallback = std::function<void(const TWaveMap&, unsigned)>;
-
-        FinderLeeRefined(TOnStepCallback&& callback)
-                : m_callback(std::move(callback))
-        {
-
-        }
-
-        // IFinder implementation
-        virtual TPath Find(const Vector2& from, const Vector2& to, const TMap& map) const override;
+        using FinderLeeBase::FinderLeeBase;
 
     private:
-        TWaveMap CreateWaveMap(const TMap& map) const;
         void RunWaves(const Vector2& from, const Vector2& to, TWaveMap& map) const;
-        TPath BuildPath(const Vector2& from, const Vector2& to, const TWaveMap& map) const;
-        bool Suitable(const Vector2 desired, const TWaveMap& map) const;
 
-        const TOnStepCallback m_callback;
     };
 
 }
