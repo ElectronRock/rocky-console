@@ -14,13 +14,14 @@
 
 namespace Path {
 
-    class FinderLeeRefined final : public FinderLeeBase {
-    public:
-        using FinderLeeBase::FinderLeeBase;
+class FinderLeeRefined final : public FinderLeeBase 
+{
+public:
+    using FinderLeeBase::FinderLeeBase;
 
-    private:
-        void RunWaves(const Vector2& from, const Vector2& to, TWaveMap& map) const;
+private:
+    virtual void RunWaves(const Vector2& from, const Vector2& to, TWaveMap& map) const override;
 
-    };
+};
 
 }

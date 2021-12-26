@@ -12,15 +12,16 @@
 #include <functional>
 #include "FinderLeeBase.h"
 
-namespace Path {
+namespace Path 
+{
 
-    class FinderLee final : public FinderLeeBase {
-    public:
+class FinderLee final : public FinderLeeBase {
+public:
 
-        using FinderLeeBase::FinderLeeBase;
+    using FinderLeeBase::FinderLeeBase;
 
-    private:
-        void RunWaves(const Vector2& from, const Vector2& to, TWaveMap& map) const;
-    };
+private:
+    virtual void RunWaves(const Vector2& from, const Vector2& to, TWaveMap& map) const override;
+};
 
 }
