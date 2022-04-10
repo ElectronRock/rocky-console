@@ -20,9 +20,6 @@ int main(int argc, char* argv[])
 {
     auto* console = rocky::Create();
 
-    int quit = 0;
-    unsigned max_x, max_y;
-
     console->Initialize();
     console->HideCursor();
 
