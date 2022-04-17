@@ -42,8 +42,8 @@ namespace rocky
         {
             { RockyColor::Black, 0 },
             { RockyColor::Red, 1 },
-            { RockyColor::Green, 3 },
-            { RockyColor::Yellow, 2 },
+            { RockyColor::Green, 2 },
+            { RockyColor::Yellow, 3 },
             { RockyColor::Blue, 4 },
             { RockyColor::Magenta, 5 },
             { RockyColor::Cyan, 6 },
