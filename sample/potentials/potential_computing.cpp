@@ -1,6 +1,7 @@
 
 #include "potential_computing.h"
 #include <cmath>
+#include <iostream>
 
 void potential_computing::init_charge(charge q) {
     m_charges.push_back(q);

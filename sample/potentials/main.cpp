@@ -10,8 +10,8 @@
 #include "rocky/RockyConsoleFactory.h"
 #include "potential_computing.h"
 
-constexpr static int MinColor { 0 };
-constexpr static int MaxColor { 5 };
+constexpr static int MinColor { 1 };
+constexpr static int MaxColor { 6 };
 
 void InitColors(rocky::IRockyConsole* console);
 void Draw(rocky::IRockyConsole* console, const potential_computing::t_matrix& matrix);
@@ -67,9 +67,9 @@ void CharAt(int ch, int color, int x, int y, rocky::IRockyConsole* console) {
 void Draw(rocky::IRockyConsole* console, const potential_computing::t_matrix& matrix) {
     for(auto i_y = 0; i_y < matrix.size(); i_y++) {
         for(auto i_x = 0; i_x < matrix[i_y].size(); i_x++) {
-            auto color = matrix[i_y][i_x]; 
+            auto color = clamp((int)matrix[i_y][i_x] + 4, MinColor, MaxColor);
             CharAt(' ', 
-                clamp((int)color + 3, MinColor, MaxColor),
+                color,
                 i_x, i_y, console
             );
         }
@@ -79,10 +79,10 @@ void Draw(rocky::IRockyConsole* console, const potential_computing::t_matrix& ma
 
 void InitColors(rocky::IRockyConsole* console) {
     console->InitColor(MaxColor, rocky::RockyColor::Red, rocky::RockyColor::Red);
-    console->InitColor(4, rocky::RockyColor::Yellow, rocky::RockyColor::Yellow);
-    console->InitColor(3, rocky::RockyColor::White, rocky::RockyColor::White);
-    console->InitColor(2, rocky::RockyColor::Cyan, rocky::RockyColor::Cyan);
-    console->InitColor(1, rocky::RockyColor::Blue, rocky::RockyColor::Blue);
+    console->InitColor(5, rocky::RockyColor::Yellow, rocky::RockyColor::Yellow);
+    console->InitColor(4, rocky::RockyColor::White, rocky::RockyColor::White);
+    console->InitColor(3, rocky::RockyColor::Cyan, rocky::RockyColor::Cyan);
+    console->InitColor(2, rocky::RockyColor::Blue, rocky::RockyColor::Blue);
     console->InitColor(MinColor, rocky::RockyColor::Black, rocky::RockyColor::Black);
 }
 
