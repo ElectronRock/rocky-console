@@ -26,6 +26,8 @@ namespace rocky
         End,
         PageUp,
         PageDown,
+        P,
+        M,
 
         Count,
     };

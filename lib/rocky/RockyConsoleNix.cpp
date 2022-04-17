@@ -31,6 +31,8 @@ namespace rocky
             { 0550, RockyKey::End },
             { 0523, RockyKey::PageUp },
             { 0522, RockyKey::PageDown },
+            { 'P', RockyKey::P },
+            { 'M', RockyKey::M },
         };
     }
 
