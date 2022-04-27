@@ -13,6 +13,8 @@
 constexpr static int MinColor { 1 };
 constexpr static int MaxColor { 6 };
 
+using namespace rocky::sample;
+
 void InitColors(rocky::IRockyConsole* console);
 void Draw(rocky::IRockyConsole* console, const potential_computing::t_matrix& matrix);
 void CharAt(int ch, int color, int x, int y, rocky::IRockyConsole* console);
@@ -87,33 +89,13 @@ void InitColors(rocky::IRockyConsole* console) {
 }
 
 void Move(rocky::RockyKey key, rocky::IRockyConsole* console) {
-    int shift_x = 0, shift_y = 0;
-    if(key== rocky::RockyKey::Left) 
-        shift_x = -1;
-    if(key== rocky::RockyKey::Right) 
-        shift_x = 1;
-    if(key== rocky::RockyKey::Up) 
-        shift_y = -1;
-    if(key== rocky::RockyKey::Down) 
-        shift_y = 1;
-
-    if(shift_x != 0 || shift_y != 0){
-        unsigned x, y;
-        console->ObtainXY(x, y);
-        x += shift_x;
-        y += shift_y;
-        console->GoToXY(x, y);
-        console->ShowCursor();
-    }
+    // TODO: Move cursor
 }
 
 bool SetPotential(rocky::RockyKey key, potential_computing& computer, rocky::IRockyConsole* console) {
-    if(key != rocky::RockyKey::P && key != rocky::RockyKey::M)
-        return false;
+    // TODO: Add potential to the map
+    // M == +
+    // P == -
 
-    unsigned x, y;
-    console->ObtainXY(x, y);
-    charge ch{ key == rocky::RockyKey::M ? -1.0 : 1.0, (double)x, (double)y };
-    computer.init_charge(ch);
-    return true;
+    return false;
 }
