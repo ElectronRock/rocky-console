@@ -16,7 +16,6 @@ namespace rocky::sample {
                 for(auto&& q: m_charges) {
                     if(std::abs(i_x - q.x) < 0.5 && std::abs(i_y - q.y) < 0.5){
                         sum = 1000 * q.q;
-                        break;
                     } else {
                         sum += q.q / (std::sqrt(pow(i_x - q.x, 2) + pow(i_y - q.y, 2)));
                     }

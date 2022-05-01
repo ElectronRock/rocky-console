@@ -33,6 +33,8 @@ namespace rocky
             { 0522, RockyKey::PageDown },
             { 'P', RockyKey::P },
             { 'M', RockyKey::M },
+            { '-', RockyKey::Minus },
+            { '=', RockyKey::Plus }
         };
     }
 

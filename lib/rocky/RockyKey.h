@@ -28,6 +28,8 @@ namespace rocky
         PageDown,
         P,
         M,
+        Minus,
+        Plus,
 
         Count,
     };
